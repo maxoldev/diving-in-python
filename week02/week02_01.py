@@ -11,7 +11,7 @@ args = parser.parse_args()
 key = args.key
 value = args.value
 
-if key is None:
+if not key:
     exit()
 
 json_dict = {}
@@ -25,7 +25,7 @@ if os.path.isfile(storage_path):
 stored_values = json_dict.get(key, [])
 stored_values = list(stored_values)
 
-if value is not None:
+if value:
     stored_values.append(value)
     json_dict[key] = stored_values
 
