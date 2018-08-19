@@ -166,6 +166,7 @@ def get_car_list(csv_filename):
     return car_list
 
 
-print(get_car_list("cars.csv"))
-for c in get_car_list("cars.csv"):
-    print(c.get_photo_file_ext())
+cars = get_car_list("cars.csv")
+print(cars)
+ext_list = list(map(lambda x: x.get_photo_file_ext(), cars))
+print(ext_list)
