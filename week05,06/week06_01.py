@@ -1,8 +1,15 @@
 import asyncio
 from collections import namedtuple
 from functools import reduce
+from enum import Enum, auto
+
 
 MetricEntry = namedtuple('MetricEntry', 'metric_title value timestamp')
+
+
+class CommandType(Enum):
+    put = auto()
+    get = auto()
 
 
 class ClientServerProtocol(asyncio.Protocol):
@@ -17,7 +24,7 @@ class ClientServerProtocol(asyncio.Protocol):
 
     def process_data(self, command: str) -> str:
         args = command.split()
-        if args[0] == "put":
+        if args[0] == CommandType.put.name:
             try:
                 metric_title = args[1]
                 value = float(args[2])
@@ -27,7 +34,7 @@ class ClientServerProtocol(asyncio.Protocol):
 
             self.event_list.append(MetricEntry(metric_title, value, timestamp))
             return self.ok_command_str
-        elif args[0] == "get":
+        elif args[0] == CommandType.get.name:
             try:
                 metric_title = args[1]
             except Exception:
